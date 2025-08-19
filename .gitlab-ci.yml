@@ -1,0 +1,18 @@
+stages:
+  - test
+  - lint
+
+test-job:
+  stage: test
+  image: python:3.11
+  script:
+    - pip install -r requirements.txt
+    - pytest --maxfail=1 --disable-warnings -q
+
+lint-job:
+  stage: lint
+  image: python:3.11
+  script:
+    - pip install black flake8 isort
+    - black --check .
+    - isort . --check-only
